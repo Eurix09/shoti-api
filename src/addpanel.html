@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Shoti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .panel {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .panel h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .panel form {
+            display: flex;
+            flex-direction: column;
+        }
+        .panel form input[type="text"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .panel form button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+        }
+        .panel form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <h1>Add Shoti</h1>
+        <form id="shotiForm">
+            <input type="text" id="link" name="link" placeholder="Enter TikTok link" required>
+            <button type="submit">Add Link</button>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('shotiForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const link = document.getElementById('link').value;
+            try {
+                const response = await fetch('/api/add/shoti?link=' + encodeURIComponent(link));
+                const result = await response.json();
+                if (!result.error) {
+                    document.getElementById('response').innerText = 'Link added successfully.';
+                } else {
+                    document.getElementById('response').innerText = 'Link already exists.';
+                }
+            } catch (error) {
+                document.getElementById('response').innerText = 'An error occurred';
+            }
+        });
+    </script>
+</body>
+</html>
