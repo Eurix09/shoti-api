@@ -4,6 +4,7 @@ const fs = require("fs");
 const axios = require("axios");
 
 const app = express();
+app.use(express.static('public'));
 const port = process.env.PORT || 8080;
 
 app.get("/", async (req, res) => {
