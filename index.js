@@ -57,27 +57,6 @@ console.log(error.message);
 }
 });
 
-app.get("/shoti", async function (req, res) {
-  try {
-  const { user } = req.query;
-  if(!user) {
-  return res.json({error: "Please search your want to add api"})
-  }
-    const response = await axios.get(`https://eurix-api.replit.app/tiksearch?search=${user}`);
-    const videoData = response.data.data.videos[0];
-    const video = videoData.play;
-    const id = videoData.video_id;
-    const username = videoData.author.unique_id;
-    const nickname = videoData.author.nickname;
-    const title = videoData.title;
-
-    await axios.get(`https://shoti-api.replit.app/api/add/shoti?link=${id}`);
-
-    res.json({ url: video, id, username, nickname, title });
-  } catch (e) {
-    res.json({ error: e.message });
-  }
-});
 
 app.get("/api/add/shoti", async (req, res) => {
   const { link } = req.query;
